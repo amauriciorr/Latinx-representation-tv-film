@@ -16,8 +16,6 @@ x= re.sub(r'\\','',x)
 x= re.sub(r' \(?#[0-9](\.[0-9]+)?\)?','',x)
 
 
-quoted = re.findall(r'(?<=}|\))[^#}]+(?=\s#)',x)
-
 # originally, I attempted to subset the captured quotes based on the decades in which they were published
 # however, this led me to realize that some of the quotes are missing their year of publication.
 # in an attempt to remedy this, I used re.findall(r'\([0-9]{4}\) ({[^#]+})?[^#}]+(?=\s#)',x) which 
@@ -37,6 +35,7 @@ mov= re.findall(r'((?<=#)[^\"\']+ \([0-9]{4}\) ({[^#]+})?[^#}]+(?= #))',x)
 yrs = []
 for i in mov:
   yrs.append(int(re.search(r'(?<=\()[0-9]{4}(?=\))',i[0]).group(0)))
+
 
 
 sp=["hola", "mijo", "illegals", "mija", "pendejo[s]?", "goya", "Mexico","Mexican[s]", 
@@ -68,29 +67,34 @@ d = {"hola":[], "mijo":[], "illegals":[], "mija":[], "pendejo[s]?":[], "goya":[]
 "yo soy":[], "dios":[], "dios mio":[],"Cuban[s]?":[],"cuban cigar[s]?":[],"peso[s]?":[]}
 
 
-for i in quoted:
+
+
+
+for i in mov:
   for j in sp:
-    d[j].append(len(re.findall('[!?.\[\]\s\'\"]'+j+'[!?.\[\]\s\'\",]?',i,flags=re.IGNORECASE)))
+    d[j].append(len(re.findall('[!?.\[\]\s\'\"]'+j+'[!?.\[\]\s\'\",]?',i[0],flags=re.IGNORECASE)))
 
-
-
-total= {}
+total={}
 for i in sp:
   total[i]=sum(d[i])
 
 
 
 
-# word cloud for quotes from both movies and TV shows, spanning from 1894 to 2017
-cloud = wordcloud.WordCloud(background_color="white",width=800, height=400,random_state=23)
-plt.imshow(cloud.generate_from_frequencies(total), interpolation='bilinear')
+df = pd.DataFrame(d)
+df['years']=yrs
+fifties = df[(df.years>=1950) & (df.years<1960)]
+
+
+tm50 = {}
+for i in sp:
+  if sum(fifties[i])>0:
+    tm50[i]=int(sum(fifties[i]))
+
+
+
+cloud = wordcloud.WordCloud(background_color="white",width=800, height=400, random_state=23)
+plt.imshow(cloud.generate_from_frequencies(tm50), interpolation='bilinear')
 plt.axis("off")
 plt.show()
-
-
-
-
-
-
-
 
