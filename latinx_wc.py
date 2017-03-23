@@ -15,7 +15,6 @@ x= re.sub(r'\\','',x)
 # to name characters. e.g Bandito #2. decided to eliminate these occurrences to get the full quotes 
 x= re.sub(r' \(?#[0-9](\.[0-9]+)?\)?','',x)
 
-# quoted=re.findall(r'(?<=}|\))[^#}]+(?=  # \"|})',x)
 
 quoted = re.findall(r'(?<=}|\))[^#}]+(?=\s#)',x)
 
@@ -40,8 +39,8 @@ for i in mov:
   yrs.append(int(re.search(r'(?<=\()[0-9]{4}(?=\))',i[0]).group(0)))
 
 
-sp=["hola", "mijo", "illegals", "mija", "pendejo[s]?", "goya", "Mexico","Mexican", 
-  "Puerto Rico","Puerto Rican", "wetback[s]?", "bandido[s]?", "bandito[s]?" ,"mamacita[s]?", "latino","chic(o|a)[s]?",
+sp=["hola", "mijo", "illegals", "mija", "pendejo[s]?", "goya", "Mexico","Mexican[s]", 
+  "Puerto Rico","Puerto Rican[s]?", "wetback[s]?", "bandido[s]?", "bandito[s]?" ,"mamacita[s]?", "latino","chic(o|a)[s]?",
 "amig(o|a)[s]?","caramba", "taco[s]?", "burrito[s]?", "gring(o|a)[s]?", "gracias", "adios",
 "hasta", "noche", "cerveza[s]?", "grande", "vato[s]?", "loco[s]?", "loca[s]?", "vida", "espanol", "casa[s]?",
 "latino[s]?", "latina[s]?", "hispanic[s]?", "buenos dias", "donde", "esta(r|mos|n|ba)", "diablo[s]?", "hombre[s]?", 
@@ -52,10 +51,10 @@ sp=["hola", "mijo", "illegals", "mija", "pendejo[s]?", "goya", "Mexico","Mexican
 "senorita", "pancho", "quiero", "huevo", "tequila",
 "tamales", "andale", "caballero[s]?", "sombrero", "queso", "chihuahua[s]", "por que", "buenas",
 "gusta", "lo siento", "feliz","feliz navidad", "buena suerte", "que", "cuando", "como","me gusta[n]?",
-"yo soy", "dios", "dios mio","cuban[s]?","cuban cigar[s]?","peso[s]?"]
+"yo soy", "dios", "dios mio","Cuban[s]?","cuban cigar[s]?","peso[s]?"]
 
-d = {"hola":[], "mijo":[], "illegals":[], "mija":[], "pendejo[s]?":[], "goya":[], "Mexico":[],"Mexican":[], 
-  "Puerto Rico":[],"Puerto Rican":[], "wetback[s]?":[], "bandido[s]?":[], "bandito[s]?" :[],"mamacita[s]?":[], "latino":[],"chic(o|a)[s]?":[],
+d = {"hola":[], "mijo":[], "illegals":[], "mija":[], "pendejo[s]?":[], "goya":[], "Mexico":[],"Mexican[s]":[], 
+  "Puerto Rico":[],"Puerto Rican[s]?":[], "wetback[s]?":[], "bandido[s]?":[], "bandito[s]?" :[],"mamacita[s]?":[], "latino":[],"chic(o|a)[s]?":[],
 "amig(o|a)[s]?":[],"caramba":[], "taco[s]?":[], "burrito[s]?":[], "gring(o|a)[s]?":[], "gracias":[], "adios":[],
 "hasta":[], "noche":[], "cerveza[s]?":[], "grande":[], "vato[s]?":[], "loco[s]?":[], "loca[s]?":[], "vida":[], "espanol":[], "casa[s]?":[],
 "latino[s]?":[], "latina[s]?":[], "hispanic[s]?":[], "buenos dias":[], "donde":[], "esta(r|mos|n|ba)":[], "diablo[s]?":[], "hombre[s]?":[], 
@@ -66,12 +65,12 @@ d = {"hola":[], "mijo":[], "illegals":[], "mija":[], "pendejo[s]?":[], "goya":[]
 "senorita":[], "pancho":[], "quiero":[], "huevo":[], "tequila":[],
 "tamales":[], "andale":[], "caballero[s]?":[], "sombrero":[], "queso":[], "chihuahua[s]":[], "por que":[], "buenas":[],
 "gusta":[], "lo siento":[], "feliz":[],"feliz navidad":[], "buena suerte":[], "que":[], "cuando":[], "como":[],"me gusta[n]?":[],
-"yo soy":[], "dios":[], "dios mio":[],"cuban[s]?":[],"cuban cigar[s]?":[],"peso[s]?":[]}
+"yo soy":[], "dios":[], "dios mio":[],"Cuban[s]?":[],"cuban cigar[s]?":[],"peso[s]?":[]}
 
 
 for i in quoted:
   for j in sp:
-    d[j].append(len(re.findall('[!?.\[\]\s\'\"]'+j+'[!?.\[\]\s\'\",]?',i)))
+    d[j].append(len(re.findall('[!?.\[\]\s\'\"]'+j+'[!?.\[\]\s\'\",]?',i,flags=re.IGNORECASE)))
 
 
 
@@ -82,7 +81,7 @@ for i in sp:
 
 
 
-# word cloud for quotes from both movies and TV shows, spanning from 1894 to 2017
+word cloud for quotes from both movies and TV shows, spanning from 1894 to 2017
 cloud = wordcloud.WordCloud(background_color="white",width=800, height=400,random_state=23)
 plt.imshow(cloud.generate_from_frequencies(total), interpolation='bilinear')
 plt.axis("off")
@@ -93,7 +92,7 @@ d2= {key: [] for key in d}
 
 for i in mov:
   for j in sp:
-    d2[j].append(len(re.findall('[!?.\[\]\s\'\"]'+j+'[!?.\[\]\s\'\",]?',i[0])))
+    d2[j].append(len(re.findall('[!?.\[\]\s\'\"]'+j+'[!?.\[\]\s\'\",]?',i[0],flags=re.IGNORECASE)))
 
 
 tm={}
@@ -107,74 +106,74 @@ plt.axis("off")
 plt.show()
 
 
-df = pd.DataFrame(d2)
-df['years']=yrs
-fifties = df[(df.years>=1950) & (df.years<1960)]
-sixties = df[(df.years>=1960) & (df.years<1970)]
-seventies = df[(df.years>=1970) & (df.years<1980)]
-eighties = df[(df.years>=1980) & (df.years<1990)]
-nineties = df[(df.years>=1990) & (df.years<2000)]
-presentish = df[(df.years>=2000) & (df.years<2018)]
+# df = pd.DataFrame(d2)
+# df['years']=yrs
+# fifties = df[(df.years>=1950) & (df.years<1960)]
+# sixties = df[(df.years>=1960) & (df.years<1970)]
+# seventies = df[(df.years>=1970) & (df.years<1980)]
+# eighties = df[(df.years>=1980) & (df.years<1990)]
+# nineties = df[(df.years>=1990) & (df.years<2000)]
+# presentish = df[(df.years>=2000) & (df.years<2018)]
 
-tm50 = {}
-tm60={}
-tm70={}
-tm80={}
-tm90={}
-tm2000={}
+# tm50 = {}
+# tm60={}
+# tm70={}
+# tm80={}
+# tm90={}
+# tm2000={}
 
-for i in sp:
-  if sum(fifties[i])>0:
-    tm50[i]=int(sum(fifties[i]))
-  if sum(sixties[i])>0:
-    tm60[i]=int(sum(sixties[i]))
-  if sum(seventies[i])>0:
-    tm70[i]=int(sum(seventies[i]))
-  if sum(eighties[i])>0:
-    tm80[i]=int(sum(eighties[i]))
-  if sum(nineties[i])>0:
-    tm90[i]=int(sum(nineties[i]))
-  if sum(presentish[i])>0:
-    tm2000[i]=int(sum(presentish[i]))
-
-
-
-cloud50 = wordcloud.WordCloud(background_color="white",width=800, height=400, random_state=23)
-plt.imshow(cloud50.generate_from_frequencies(tm50), interpolation='bilinear')
-plt.axis("off")
-plt.show()
+# for i in sp:
+#   if sum(fifties[i])>0:
+#     tm50[i]=int(sum(fifties[i]))
+#   if sum(sixties[i])>0:
+#     tm60[i]=int(sum(sixties[i]))
+#   if sum(seventies[i])>0:
+#     tm70[i]=int(sum(seventies[i]))
+#   if sum(eighties[i])>0:
+#     tm80[i]=int(sum(eighties[i]))
+#   if sum(nineties[i])>0:
+#     tm90[i]=int(sum(nineties[i]))
+#   if sum(presentish[i])>0:
+#     tm2000[i]=int(sum(presentish[i]))
 
 
 
-cloud60 = wordcloud.WordCloud(background_color="white",width=800, height=400,random_state=23)
-plt.imshow(cloud60.generate_from_frequencies(tm60), interpolation='bilinear')
-plt.axis("off")
-plt.show()
-
-
-cloud70 = wordcloud.WordCloud(background_color="white",width=800, height=400,random_state=23)
-plt.imshow(cloud70.generate_from_frequencies(tm70), interpolation='bilinear')
-plt.axis("off")
-plt.show()
-
-
-cloud80 = wordcloud.WordCloud(background_color="white",width=800, height=400,random_state=23)
-plt.imshow(cloud80.generate_from_frequencies(tm80), interpolation='bilinear')
-plt.axis("off")
-plt.show()
-
-
-cloud90 = wordcloud.WordCloud(background_color="white",width=800, height=400,random_state=23)
-plt.imshow(cloud90.generate_from_frequencies(tm90), interpolation='bilinear')
-plt.axis("off")
-plt.show()
+# cloud50 = wordcloud.WordCloud(background_color="white",width=800, height=400, random_state=23)
+# plt.imshow(cloud50.generate_from_frequencies(tm50), interpolation='bilinear')
+# plt.axis("off")
+# plt.show()
 
 
 
-cloud2000s = wordcloud.WordCloud(background_color="white",width=800, height=400,random_state=23)
-plt.imshow(cloud2000s.generate_from_frequencies(tm2000), interpolation='bilinear')
-plt.axis("off")
-plt.show()
+# cloud60 = wordcloud.WordCloud(background_color="white",width=800, height=400,random_state=23)
+# plt.imshow(cloud60.generate_from_frequencies(tm60), interpolation='bilinear')
+# plt.axis("off")
+# plt.show()
+
+
+# cloud70 = wordcloud.WordCloud(background_color="white",width=800, height=400,random_state=23)
+# plt.imshow(cloud70.generate_from_frequencies(tm70), interpolation='bilinear')
+# plt.axis("off")
+# plt.show()
+
+
+# cloud80 = wordcloud.WordCloud(background_color="white",width=800, height=400,random_state=23)
+# plt.imshow(cloud80.generate_from_frequencies(tm80), interpolation='bilinear')
+# plt.axis("off")
+# plt.show()
+
+
+# cloud90 = wordcloud.WordCloud(background_color="white",width=800, height=400,random_state=23)
+# plt.imshow(cloud90.generate_from_frequencies(tm90), interpolation='bilinear')
+# plt.axis("off")
+# plt.show()
+
+
+
+# cloud2000s = wordcloud.WordCloud(background_color="white",width=800, height=400,random_state=23)
+# plt.imshow(cloud2000s.generate_from_frequencies(tm2000), interpolation='bilinear')
+# plt.axis("off")
+# plt.show()
 
 
 
