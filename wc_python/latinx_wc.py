@@ -50,7 +50,7 @@ sp=["hola", "mijo", "illegals", "mija", "pendejo[s]?", "goya", "Mexico","Mexican
 "fuego", "mierda", "madre", "callate", "habl(a|as|amos|ar|emos)", "muchacho[s]?", "muchacha[s]?",
 "senorita", "pancho", "quiero", "huevo", "tequila",
 "tamales", "andale", "caballero[s]?", "sombrero", "queso", "chihuahua[s]", "por que", "buenas",
-"gusta", "lo siento", "feliz","feliz navidad", "buena suerte", "que", "cuando", "como","me gusta[n]?",
+"gusta", "lo siento", "feliz","feliz navidad", "buena suerte", "cuando", "como","me gusta[n]?",
 "yo soy", "dios", "dios mio","Cuban[s]?","cuban cigar[s]?","peso[s]?","tortilla[s]?"]
 
 d = {"hola":[], "mijo":[], "illegals":[], "mija":[], "pendejo[s]?":[], "goya":[], "Mexico":[],"Mexican[s]":[], 
@@ -64,7 +64,7 @@ d = {"hola":[], "mijo":[], "illegals":[], "mija":[], "pendejo[s]?":[], "goya":[]
 "fuego":[], "mierda":[], "madre":[],"callate":[], "habl(a|as|amos|ar|emos)":[], "muchacho[s]?":[], "muchacha[s]?":[],
 "senorita":[], "pancho":[], "quiero":[], "huevo":[], "tequila":[],
 "tamales":[], "andale":[], "caballero[s]?":[], "sombrero":[], "queso":[], "chihuahua[s]":[], "por que":[], "buenas":[],
-"gusta":[], "lo siento":[], "feliz":[],"feliz navidad":[], "buena suerte":[], "que":[], "cuando":[], "como":[],"me gusta[n]?":[],
+"gusta":[], "lo siento":[], "feliz":[],"feliz navidad":[], "buena suerte":[], "cuando":[], "como":[],"me gusta[n]?":[],
 "yo soy":[], "dios":[], "dios mio":[],"Cuban[s]?":[],"cuban cigar[s]?":[],"peso[s]?":[],"tortilla[s]?":[]}
 
 
