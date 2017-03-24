@@ -10,3 +10,7 @@ When studying the word clouds, one can observe that out of Mexico, Cuba, and Pue
 **It is important to keep in mind the frequency of each word is only being compared only to the frequencies of the other words in my list. The frequencies of the words in my list relative to every other word in the quotes source file are so small as to be negligible. They would not make an appearance on a word cloud generated from the quotes file. This is why it was important to consider my list as the sample space. Even though each word in my list is insignificant relative to the entire quotes file, relative to each other we get to see which words hold more weight. Specifically, we see what aspects of Latinx culture or language are pushed to the forefront. For me it was never a question of whether Latinx were present in film and television but rather in what manner they are being presented. 
 
 ***Lastly, I want to mention that the quotes data provided by IMDb is in no way complete. The quotes compiled by IMDb are in fact user-submitted but it is not until they are reviewed by IMDb that they can be added to the list. A comprehensive analysis would involve full television and movie scripts. This, however, would result not only in a much larger source file but also a much longer run-time. 
+
+
+
+IMDb's data can be accessed at: ftp://ftp.fu-berlin.de/pub/misc/movies/database/
